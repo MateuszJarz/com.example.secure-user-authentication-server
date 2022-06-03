@@ -15,8 +15,6 @@ version = "0.0.1"
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
 
-    val isDevelopment: Boolean = project.ext.has("development")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 tasks{
     create("stage").dependsOn("installDist")
@@ -28,16 +26,23 @@ repositories {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-call-logging-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-sessions-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-auth-jvm:$ktorVersion")
     implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
+
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+
+    // Sessions
+    implementation("io.ktor:ktor-server-sessions-jvm:$ktorVersion")
+
+    // Auth
+    implementation("io.ktor:ktor-server-auth-jvm:$ktorVersion")
+
+    // Content Negotiation
+    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktorVersion")
+    implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktorVersion")
 
     // KMongo
     implementation("org.litote.kmongo:kmongo-async:$kmongoVersion")
